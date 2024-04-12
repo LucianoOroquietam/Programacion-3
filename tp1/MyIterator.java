@@ -1,8 +1,9 @@
 package ProgramacionIII.tp1;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class MyIterator<T> implements Iterator<T> {
+public class MyIterator<T extends Comparable> implements Iterator<T> {
 
     private Node<T>node;
 
@@ -17,10 +18,19 @@ public class MyIterator<T> implements Iterator<T> {
 
     @Override
     public T next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException("No hay más elementos en el iterador");
+        }
         T info = this.node.getInfo();
         this.node = this.node.getNext();
-
         return info;
 
+    }
+    public T getInfoIterator(){
+        if (this.node != null) {
+            return this.node.getInfo();
+        } else {
+            throw new NoSuchElementException("El iterador no apunta a ningún nodo");
+        }
     }
 }

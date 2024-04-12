@@ -3,18 +3,21 @@ package ProgramacionIII.tp1;
 
 import java.util.Iterator;
 
-public class MySimpleLinkedList<T> implements Iterable<T>{
+public class MyLinkedList<T extends Comparable> implements Iterable<T>{
 	
 	private Node<T> firstNode;
-	
-	public MySimpleLinkedList() {
+
+	public MyLinkedList() {
 		this.firstNode = null;
+
 	}
-	
+
 	public void insertFront(T info) {
+
 		Node<T> tmp = new Node<T>(info,null);
 		tmp.setNext(this.firstNode);
 		this.firstNode = tmp;
+		
 	}
 	
 	public T extractFront() {		
@@ -61,34 +64,6 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 		return -1;
 	}
 
-	public MySimpleLinkedList<T> encontrarElementosComunes(MySimpleLinkedList<T> list1, MySimpleLinkedList<T>list2){
-		MySimpleLinkedList<T> listaElementosComunes= new MySimpleLinkedList<>();
-
-		//me voy a parar en la lista 1 , primer nodo
-		Node<T> currentNode_l1 = list1.firstNode;
-
-		while (currentNode_l1 != null) {
-			//agarro la informacion del nodo para comparar
-			T elemento = currentNode_l1.getInfo();
-			//me paro en el primer nodo de la lista 2
-			Node<T> currentNode_l2 = list2.firstNode;
-			boolean encontrado = false;
-				while (currentNode_l2 != null && !encontrado) {
-					// Si el elemento de lista1 coincide con el de lista2
-					if (currentNode_l2.getInfo().equals(currentNode_l1)){
-						listaElementosComunes.insertFront(elemento);
-						encontrado = true;
-					}
-
-					currentNode_l2=currentNode_l2.getNext();
-			}
-
-			currentNode_l1 = currentNode_l1.getNext();
-		}
-
-		//podria llamar a un metodo que me ordene por valor de getInfo() osea si me quedo 2 1 4 -> que me quede 4 2 1 o 1 2 4 .
-		return listaElementosComunes;
-	}
 
 	public int size() {
 		int size = 0;
@@ -103,13 +78,34 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 
 	@Override
 	public String toString() {
-		return
-				"primer nodo=" + firstNode;
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		Node<T> current = firstNode;
+		while (current != null) {
+			sb.append(current.getInfo());
+			if (current.getNext() != null) {
+				sb.append(", ");
+			}
+			current = current.getNext();
+		}
+		sb.append("]");
+		return sb.toString();
 	}
 
 
 	@Override
-	public Iterator<T> iterator() {
+	public MyIterator<T> iterator() {
 		return new MyIterator<>(this.firstNode);
+	}
+
+	public boolean contains(T info1) {
+		Node<T> currentNode = this.firstNode;
+		while (currentNode != null) {
+			if (currentNode.getInfo().equals(info1)) {
+				return true;
+			}
+			currentNode = currentNode.getNext();
+		}
+		return false;
 	}
 }
