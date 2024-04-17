@@ -7,6 +7,10 @@ import java.util.Arrays;
  * Implemente un algoritmo de ordenamiento por selección en un arreglo.
  * Implemente un algoritmo de ordenamiento por burbujeo en un arreglo.
  * ● ¿Qué complejidad big-O tienen estos algoritmos?
+ *
+ * Tienen una complejidad temporal de O(n^2) en el peor de los casos.
+ * Esto significa que el tiempo que tardan en ordenar una lista de n elementos aumenta cuadráticamente con el tamaño de la lista. Esto puede hacer que
+ * ambos algoritmos sean ineficientes para listas muy grandes, ya que el tiempo de ejecución aumenta significativamente a medida que aumenta el tamaño de la lista.
  * */
 
 public class ej6 {
