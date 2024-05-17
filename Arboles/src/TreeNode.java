@@ -20,6 +20,10 @@ public class TreeNode {
         return valorNodo;
     }
 
+    public void setValue(int valorNodo) {
+        this.valorNodo = valorNodo;
+    }
+
     public TreeNode getLeft() {
         return left;
     }

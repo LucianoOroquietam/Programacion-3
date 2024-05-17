@@ -37,6 +37,51 @@ public class Tree {
         }
     }
 
+    public void delete(Integer value) {
+        delete(this.root,value);
+    }
+
+    private boolean delete(TreeNode root, Integer value){
+
+        if (root == null){
+            return false;
+
+        }
+        //1 caso cuando me pasan una hoja
+        if (value < root.getValue()){
+            boolean deleted = delete(root.getLeft(), value);
+            //ajustamos las referencias del padre del nodo 1 para que ya no apunten a él.
+            // En este caso, el nodo padre del nodo 1 es el nodo con el valor 3.
+            if (deleted && root.getLeft() != null) {
+                root.setLeft(null);
+            }
+        }else if(value > root.getValue()){
+            boolean deleted = delete(root.getRight(),value);
+            if (deleted && root.getRight() != null) {
+                root.setRight(null); // Ajusta la referencia del padre al hijo restante
+            }
+        }else {
+            // Caso cuando el nodo encontrado tiene un solo hijo
+            if (root.getLeft() == null && root.getRight() != null) {
+                // Ajustamos las referencias del padre para que apunten al hijo derecho
+                //seteo el valor a eliminar con su hijo derecho
+                root.setValue(root.getRight().getValue());
+                root.setRight(root.getRight().getRight());
+            } else if (root.getLeft() != null && root.getRight() == null) {
+                // Ajustamos las referencias del padre para que apunten al hijo izquierdo
+
+                //seteo el valor a eliminar con su hijo izq
+                root.setValue(root.getLeft().getValue());
+                //a la izquierda del padre voy a tener el valor a la izquierda del hijo que voy a borrar
+                root.setLeft(root.getLeft().getLeft());
+            }else{
+                // Otros caso (nodo hoja)
+                return root.getLeft() == null && root.getRight() == null;
+            }
+        }
+        return false;
+    }
+
     public  int getHeight(){
         return getHeight(this.root);
     }
